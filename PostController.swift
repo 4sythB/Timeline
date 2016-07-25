@@ -19,14 +19,15 @@ class PostController {
     func saveContext() {
         do {
             try moc.save()
-        } catch {
-            print("Unable to save context.")
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
         }
     }
     
     func createPost(image: UIImage, caption: String) {
-        guard let imageData: NSData = UIImagePNGRepresentation(image) else { return }
-        _ = Post(photo: imageData, comments: caption)
+        guard let imageData: NSData = UIImagePNGRepresentation(image), post = Post(photo: imageData) else { return }
+        
+        _ = Comment(post: post, text: caption)
         saveContext()
     }
     

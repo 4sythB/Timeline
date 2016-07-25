@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 class Comment: SyncableObject {
 
     convenience init?(post: Post, text: String, timestamp: NSDate = NSDate(), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {

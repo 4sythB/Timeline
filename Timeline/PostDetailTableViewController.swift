@@ -49,7 +49,8 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     }
     
     func updateWithPost(post: Post) {
-        guard let imageData = post.photoData, image: UIImage = UIImage(data: imageData) else { return }
+        let imageData = post.photoData
+        guard let image: UIImage = UIImage(data: imageData) else { return }
         postImageView.image = image
     }
     

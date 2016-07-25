@@ -12,12 +12,11 @@ import CoreData
 
 class Post: SyncableObject {
 
-    convenience init?(photo: NSData, timestamp: NSDate = NSDate(), comments: String, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience init?(photo: NSData, timestamp: NSDate = NSDate(), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         guard let entity = NSEntityDescription.entityForName("Post", inManagedObjectContext: context) else { return nil }
         
         self.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.photoData = photo
-        self.comments = NSSet(objects: comments)
     }
 }
