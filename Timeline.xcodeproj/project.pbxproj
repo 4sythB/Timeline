@@ -19,12 +19,13 @@
 		A28BB9CE1D468BCD001D1713 /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9CD1D468BCD001D1713 /* SearchResultsTableViewController.swift */; };
 		A28BB9D21D468C97001D1713 /* PostModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9D01D468C97001D1713 /* PostModel.xcdatamodeld */; };
 		A28BB9D41D468CAA001D1713 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9D31D468CAA001D1713 /* Stack.swift */; };
-		A28BB9D91D469061001D1713 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9D51D469061001D1713 /* Post+CoreDataProperties.swift */; };
-		A28BB9DA1D469061001D1713 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9D61D469061001D1713 /* Post.swift */; };
 		A28BB9DB1D469061001D1713 /* SyncableObject+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9D71D469061001D1713 /* SyncableObject+CoreDataProperties.swift */; };
 		A28BB9DC1D469061001D1713 /* SyncableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9D81D469061001D1713 /* SyncableObject.swift */; };
 		A28BB9E01D46A02C001D1713 /* Comment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9DE1D46A02C001D1713 /* Comment+CoreDataProperties.swift */; };
 		A28BB9E11D46A02C001D1713 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9DF1D46A02C001D1713 /* Comment.swift */; };
+		A28BB9E31D46A153001D1713 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E21D46A153001D1713 /* PostController.swift */; };
+		A28BB9E71D46A29F001D1713 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E51D46A29F001D1713 /* Post+CoreDataProperties.swift */; };
+		A28BB9E81D46A29F001D1713 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E61D46A29F001D1713 /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,12 +64,13 @@
 		A28BB9CD1D468BCD001D1713 /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		A28BB9D11D468C97001D1713 /* PostModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostModel.xcdatamodel; sourceTree = "<group>"; };
 		A28BB9D31D468CAA001D1713 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		A28BB9D51D469061001D1713 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		A28BB9D61D469061001D1713 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		A28BB9D71D469061001D1713 /* SyncableObject+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SyncableObject+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A28BB9D81D469061001D1713 /* SyncableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncableObject.swift; sourceTree = "<group>"; };
 		A28BB9DE1D46A02C001D1713 /* Comment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Comment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A28BB9DF1D46A02C001D1713 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		A28BB9E21D46A153001D1713 /* PostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostController.swift; path = ../PostController.swift; sourceTree = "<group>"; };
+		A28BB9E51D46A29F001D1713 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A28BB9E61D46A29F001D1713 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				68658B2B1CF8A1D60016C5CD /* Main.storyboard */,
 				A28BB9D31D468CAA001D1713 /* Stack.swift */,
 				A28BB9DD1D469069001D1713 /* Model + Core Data */,
+				A28BB9E41D46A15A001D1713 /* Model Controllers */,
 				A28BB9CF1D468C4B001D1713 /* View Controllers */,
 				68658B2E1CF8A1D60016C5CD /* Assets.xcassets */,
 				68658B301CF8A1D60016C5CD /* LaunchScreen.storyboard */,
@@ -164,8 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				A28BB9D01D468C97001D1713 /* PostModel.xcdatamodeld */,
-				A28BB9D51D469061001D1713 /* Post+CoreDataProperties.swift */,
-				A28BB9D61D469061001D1713 /* Post.swift */,
+				A28BB9E51D46A29F001D1713 /* Post+CoreDataProperties.swift */,
+				A28BB9E61D46A29F001D1713 /* Post.swift */,
 				A28BB9DE1D46A02C001D1713 /* Comment+CoreDataProperties.swift */,
 				A28BB9DF1D46A02C001D1713 /* Comment.swift */,
 				A28BB9D71D469061001D1713 /* SyncableObject+CoreDataProperties.swift */,
@@ -173,6 +176,14 @@
 			);
 			name = "Model + Core Data";
 			path = ..;
+			sourceTree = "<group>";
+		};
+		A28BB9E41D46A15A001D1713 /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A28BB9E21D46A153001D1713 /* PostController.swift */,
+			);
+			name = "Model Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,18 +318,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				68658B281CF8A1D60016C5CD /* AppDelegate.swift in Sources */,
-				A28BB9D91D469061001D1713 /* Post+CoreDataProperties.swift in Sources */,
 				A28BB9D21D468C97001D1713 /* PostModel.xcdatamodeld in Sources */,
 				A28BB9DB1D469061001D1713 /* SyncableObject+CoreDataProperties.swift in Sources */,
 				A28BB9D41D468CAA001D1713 /* Stack.swift in Sources */,
 				A28BB9C81D468AAF001D1713 /* PostListTableViewController.swift in Sources */,
+				A28BB9E81D46A29F001D1713 /* Post.swift in Sources */,
 				A28BB9CE1D468BCD001D1713 /* SearchResultsTableViewController.swift in Sources */,
 				A28BB9DC1D469061001D1713 /* SyncableObject.swift in Sources */,
 				A28BB9E11D46A02C001D1713 /* Comment.swift in Sources */,
-				A28BB9DA1D469061001D1713 /* Post.swift in Sources */,
 				A28BB9CC1D468B90001D1713 /* AddPostTableViewController.swift in Sources */,
+				A28BB9E31D46A153001D1713 /* PostController.swift in Sources */,
 				A28BB9E01D46A02C001D1713 /* Comment+CoreDataProperties.swift in Sources */,
 				A28BB9CA1D468AE6001D1713 /* PostDetailTableViewController.swift in Sources */,
+				A28BB9E71D46A29F001D1713 /* Post+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
