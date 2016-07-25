@@ -21,6 +21,7 @@ class PostController {
             try moc.save()
         } catch let error as NSError {
             print("Error: \(error.localizedDescription)")
+            print(error.userInfo)
         }
     }
     

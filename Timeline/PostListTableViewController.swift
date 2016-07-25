@@ -27,7 +27,7 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
         let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
         request.sortDescriptors = [sortDescriptor]
         
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "timestamp", cacheName: nil)
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         
         do {
             try fetchedResultsController.performFetch()
@@ -71,6 +71,8 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         tableView.beginUpdates()
     }
+    
+    
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         

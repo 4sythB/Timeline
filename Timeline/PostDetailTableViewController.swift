@@ -13,7 +13,7 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     
     @IBOutlet weak var postImageView: UIImageView!
     
-    var post: Post = Post()
+    var post: Post?
     
     let moc = Stack.sharedStack.managedObjectContext
     
@@ -27,15 +27,20 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        if let post = post {
+            updateWithPost(post)
+        }
+        
         setupFetchedResultsController()
     }
     
     func setupFetchedResultsController() {
         
+        guard let post = post else { return }
         let request = NSFetchRequest(entityName: "Comment")
         let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
         request.sortDescriptors = [sortDescriptor]
-        request.predicate = NSPredicate(format: "post == $@", post)
+        request.predicate = NSPredicate(format: "post == %@", post)
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "timestamp", cacheName: nil)
         
@@ -67,9 +72,11 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("postDetailCell", forIndexPath: indexPath)
-        let post = fetchedResultsController.objectAtIndexPath(indexPath)
         
-        cell.textLabel?.text = post.comment
+        guard let comments = post?.comments, post = post else { return UITableViewCell() }
+        let comment = comments[indexPath.row] as Comment
+        
+        cell.textLabel?.text = comment.text
         cell.detailTextLabel?.text = "\(post.timestamp)"
         
         return cell
@@ -97,7 +104,8 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
                 comment = commentTextField.text else { return }
             
             if comment.characters.count > 0 {
-                self.postController.addCommentToPost(comment, post: self.post)
+                guard let post = self.post else { return }
+                self.postController.addCommentToPost(comment, post: post)
             }
         }
         

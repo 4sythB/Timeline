@@ -18,5 +18,7 @@ class Post: SyncableObject {
         self.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.photoData = photo
+        self.timestamp = timestamp
+        self.recordName = NSUUID().UUIDString
     }
 }
