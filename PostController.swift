@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 import UIKit
 
 class PostController {
@@ -14,6 +15,18 @@ class PostController {
     static let sharedController = PostController()
     
     let moc = Stack.sharedStack.managedObjectContext
+    
+    let fetchedResultsController: NSFetchedResultsController
+    
+    init() {
+        let request = NSFetchRequest(entityName: "Post")
+        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "timestamp", cacheName: nil)
+        
+        _ = try? fetchedResultsController.performFetch()
+    }
     
     func saveContext() {
         do {
@@ -31,6 +44,11 @@ class PostController {
     
     func addCommentToPost(text: String, post: Post) {
         _ = Comment(post: post, text: text)
+        saveContext()
+    }
+    
+    func deletePost(post: Post) {
+        moc.deleteObject(post)
         saveContext()
     }
 }
