@@ -16,18 +16,6 @@ class PostController {
     
     let moc = Stack.sharedStack.managedObjectContext
     
-    let fetchedResultsController: NSFetchedResultsController
-    
-    init() {
-        let request = NSFetchRequest(entityName: "Post")
-        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "timestamp", cacheName: nil)
-        
-        _ = try? fetchedResultsController.performFetch()
-    }
-    
     func saveContext() {
         do {
             try moc.save()

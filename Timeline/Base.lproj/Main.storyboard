@@ -42,15 +42,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="300" id="zel-49-6cg" customClass="PostTableViewCell" customModule="Timeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="300"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="250" id="zel-49-6cg" customClass="PostTableViewCell" customModule="Timeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="250"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zel-49-6cg" id="UBc-g3-ilL">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="299.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="249.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8X-2c-deZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="299.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
@@ -114,13 +114,69 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <stackView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" axis="vertical" id="NiZ-hs-ep5">
+                            <rect key="frame" x="0.0" y="64" width="600" height="294"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4sv-Jc-htd">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="250" id="2UE-xg-f8F"/>
+                                    </constraints>
+                                </imageView>
+                                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeB-r9-AkE">
+                                    <rect key="frame" x="0.0" y="250" width="600" height="44"/>
+                                    <items>
+                                        <barButtonItem title="Comment" id="gAh-kQ-Zkx">
+                                            <connections>
+                                                <action selector="commentButtonTapped:" destination="Ihl-RZ-xOW" id="hXq-pr-ozR"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem style="plain" systemItem="flexibleSpace" id="lId-q2-taJ"/>
+                                        <barButtonItem title="Share" id="Kc5-vD-mSo">
+                                            <connections>
+                                                <action selector="shareButtonTapped:" destination="Ihl-RZ-xOW" id="2Rn-Ej-YOq"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem style="plain" systemItem="flexibleSpace" id="hec-GM-6W5"/>
+                                        <barButtonItem title="Follow Post" id="mn1-W9-GYB">
+                                            <connections>
+                                                <action selector="followPostButtonTapped:" destination="Ihl-RZ-xOW" id="tvi-z6-7Ob"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </items>
+                                </toolbar>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="4sv-Jc-htd" firstAttribute="top" secondItem="NiZ-hs-ep5" secondAttribute="top" id="Qgf-Ff-6gu"/>
+                                <constraint firstItem="qeB-r9-AkE" firstAttribute="top" secondItem="4sv-Jc-htd" secondAttribute="bottom" id="ewa-ij-PF5"/>
+                                <constraint firstAttribute="trailing" secondItem="4sv-Jc-htd" secondAttribute="trailing" id="qxv-mn-oHz"/>
+                                <constraint firstItem="4sv-Jc-htd" firstAttribute="leading" secondItem="NiZ-hs-ep5" secondAttribute="leading" id="rUe-hW-Y1Z"/>
+                            </constraints>
+                        </stackView>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postDetailCell" id="8wm-a0-tyi">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postDetailCell" textLabel="zaT-f3-MxM" detailTextLabel="JAB-S6-onm" style="IBUITableViewCellStyleSubtitle" id="8wm-a0-tyi">
+                                <rect key="frame" x="0.0" y="386" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8wm-a0-tyi" id="qnb-zT-QFv">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zaT-f3-MxM">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JAB-S6-onm">
+                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -129,6 +185,9 @@
                             <outlet property="delegate" destination="Ihl-RZ-xOW" id="Mvc-CC-73w"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="postImageView" destination="4sv-Jc-htd" id="qMH-BE-jlM"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2eF-iq-l3s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

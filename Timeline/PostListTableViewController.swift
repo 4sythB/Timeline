@@ -11,26 +11,47 @@ import CoreData
 
 class PostListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
+    let moc = Stack.sharedStack.managedObjectContext
+    
+    var fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        PostController.sharedController.fetchedResultsController.delegate = self
+        setupFetchedResultsController()
+    }
+    
+    func setupFetchedResultsController() {
+        
+        let request = NSFetchRequest(entityName: "Post")
+        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
+        request.sortDescriptors = [sortDescriptor]
+        
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "timestamp", cacheName: nil)
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        fetchedResultsController.delegate = self
     }
     
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return PostController.sharedController.fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = PostController.sharedController.fetchedResultsController.sections else { return 0 }
+        guard let sections = fetchedResultsController.sections else { return 0 }
         return sections[section].numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("postCell", forIndexPath: indexPath) as? PostTableViewCell,
-            post = PostController.sharedController.fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return UITableViewCell() }
+            post = fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return UITableViewCell() }
         
         cell.updateWithPost(post)
         
@@ -40,7 +61,7 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            guard let post = PostController.sharedController.fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return }
+            guard let post = fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return }
             PostController.sharedController.deletePost(post)
         }
     }
@@ -82,7 +103,7 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
         
         if segue.identifier == "toDetailViewSegue" {
             guard let indexPath = tableView.indexPathForSelectedRow,
-                post = PostController.sharedController.fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return }
+                post = fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return }
             destinationVC?.post = post
         }
     }
