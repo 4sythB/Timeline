@@ -26,6 +26,7 @@
 		A28BB9E31D46A153001D1713 /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E21D46A153001D1713 /* PostController.swift */; };
 		A28BB9E71D46A29F001D1713 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E51D46A29F001D1713 /* Post+CoreDataProperties.swift */; };
 		A28BB9E81D46A29F001D1713 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E61D46A29F001D1713 /* Post.swift */; };
+		A28BB9EA1D46A5E1001D1713 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E91D46A5E1001D1713 /* PostTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		A28BB9E21D46A153001D1713 /* PostController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostController.swift; path = ../PostController.swift; sourceTree = "<group>"; };
 		A28BB9E51D46A29F001D1713 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A28BB9E61D46A29F001D1713 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		A28BB9E91D46A5E1001D1713 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				A28BB9C91D468AE6001D1713 /* PostDetailTableViewController.swift */,
 				A28BB9CB1D468B90001D1713 /* AddPostTableViewController.swift */,
 				A28BB9CD1D468BCD001D1713 /* SearchResultsTableViewController.swift */,
+				A28BB9E91D46A5E1001D1713 /* PostTableViewCell.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 			files = (
 				68658B281CF8A1D60016C5CD /* AppDelegate.swift in Sources */,
 				A28BB9D21D468C97001D1713 /* PostModel.xcdatamodeld in Sources */,
+				A28BB9EA1D46A5E1001D1713 /* PostTableViewCell.swift in Sources */,
 				A28BB9DB1D469061001D1713 /* SyncableObject+CoreDataProperties.swift in Sources */,
 				A28BB9D41D468CAA001D1713 /* Stack.swift in Sources */,
 				A28BB9C81D468AAF001D1713 /* PostListTableViewController.swift in Sources */,
