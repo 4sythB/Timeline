@@ -38,22 +38,49 @@
         <scene sceneID="TxO-dz-Vqk">
             <objects>
                 <tableViewController id="lXS-0S-ba9" customClass="PostListTableViewController" customModule="Timeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="300" sectionHeaderHeight="28" sectionFooterHeight="28" id="jl0-YU-4pa">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="251" sectionHeaderHeight="28" sectionFooterHeight="28" id="jl0-YU-4pa">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="250" id="zel-49-6cg" customClass="PostTableViewCell" customModule="Timeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="250"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="postCell" rowHeight="251" id="zel-49-6cg" customClass="PostTableViewCell" customModule="Timeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="251"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zel-49-6cg" id="UBc-g3-ilL">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="249.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r8X-2c-deZ">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="r8X-2c-deZ">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="250" id="fsa-Ag-sgw"/>
+                                                <constraint firstAttribute="height" constant="250" id="rrb-Pp-Ywv"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="fsa-Ag-sgw"/>
+                                                </mask>
+                                            </variation>
                                         </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="r8X-2c-deZ" firstAttribute="top" secondItem="UBc-g3-ilL" secondAttribute="top" id="2Fg-em-dG0"/>
+                                        <constraint firstAttribute="bottom" secondItem="r8X-2c-deZ" secondAttribute="bottom" constant="0.5" id="3ln-Ri-UDJ"/>
+                                        <constraint firstAttribute="trailing" secondItem="r8X-2c-deZ" secondAttribute="trailing" id="5Ue-uf-bQm"/>
+                                        <constraint firstItem="r8X-2c-deZ" firstAttribute="leading" secondItem="UBc-g3-ilL" secondAttribute="leading" id="Dq0-p3-hW6"/>
+                                        <constraint firstAttribute="bottom" secondItem="r8X-2c-deZ" secondAttribute="bottom" constant="0.5" id="GO9-V5-6hh"/>
+                                        <constraint firstItem="r8X-2c-deZ" firstAttribute="top" secondItem="UBc-g3-ilL" secondAttribute="top" id="e97-Tb-eMt"/>
+                                        <constraint firstItem="r8X-2c-deZ" firstAttribute="leading" secondItem="UBc-g3-ilL" secondAttribute="leading" id="qnh-hh-FRs"/>
+                                        <constraint firstAttribute="trailing" secondItem="r8X-2c-deZ" secondAttribute="trailing" id="rPI-Tv-6eq"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="GO9-V5-6hh"/>
+                                            <exclude reference="e97-Tb-eMt"/>
+                                            <exclude reference="qnh-hh-FRs"/>
+                                            <exclude reference="rPI-Tv-6eq"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="postImageView" destination="r8X-2c-deZ" id="irg-Fe-OWT"/>
