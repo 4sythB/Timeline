@@ -32,4 +32,9 @@ class SearchResultsTableViewController: UITableViewController {
 
         return cell
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        presentingViewController?.performSegueWithIdentifier("toDetailViewSegue", sender: cell)
+    }
 }

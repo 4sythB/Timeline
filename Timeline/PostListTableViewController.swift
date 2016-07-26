@@ -54,6 +54,7 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
         searchController.searchBar.placeholder = "Search"
         searchController.definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
+        
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
@@ -128,12 +129,27 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let destinationVC = segue.destinationViewController as? PostDetailTableViewController
+        if segue.identifier == "toPostDetail" {
+            
+            if let detailViewController = segue.destinationViewController as? PostDetailTableViewController,
+                let selectedIndexPath = self.tableView.indexPathForSelectedRow,
+                let post = fetchedResultsController.objectAtIndexPath(selectedIndexPath) as? Post {
+                
+                detailViewController.post = post
+            }
+        }
         
-        if segue.identifier == "toDetailViewSegue" {
-            guard let indexPath = tableView.indexPathForSelectedRow,
-                post = fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return }
-            destinationVC?.post = post
+        if segue.identifier == "toPostDetailFromSearch" {
+            if let detailViewController = segue.destinationViewController as? PostDetailTableViewController,
+                let sender = sender as? PostTableViewCell,
+                let selectedIndexPath = (searchController?.searchResultsController as? SearchResultsTableViewController)?.tableView.indexPathForCell(sender),
+                let searchTerm = searchController?.searchBar.text?.lowercaseString,
+                let posts = fetchedResultsController.fetchedObjects?.filter({ $0.matchesSearchTerm(searchTerm) }) as? [Post] {
+                
+                let post = posts[selectedIndexPath.row]
+                
+                detailViewController.post = post
+            }
         }
     }
 }

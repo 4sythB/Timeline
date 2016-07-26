@@ -22,6 +22,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Ihl-RZ-xOW" kind="show" identifier="toPostDetailFromSearch" id="gbz-vC-JxZ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -84,7 +87,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="postImageView" destination="r8X-2c-deZ" id="irg-Fe-OWT"/>
-                                    <segue destination="Ihl-RZ-xOW" kind="show" identifier="toDetailViewSegue" id="Jp1-ZM-8aR"/>
+                                    <segue destination="Ihl-RZ-xOW" kind="show" identifier="toPostDetail" id="Jp1-ZM-8aR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -363,4 +366,7 @@
             <point key="canvasLocation" x="295" y="1062"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Jp1-ZM-8aR"/>
+    </inferredMetricsTieBreakers>
 </document>
