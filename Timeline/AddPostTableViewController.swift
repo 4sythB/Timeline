@@ -8,15 +8,18 @@
 
 import UIKit
 
-class AddPostTableViewController: UITableViewController {
+class AddPostTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var commentTextField: UITextField!
+    
+    let imagePicker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imagePicker.delegate = self
     }
 
     // MARK: - Table view data source
@@ -56,7 +59,12 @@ class AddPostTableViewController: UITableViewController {
     // MARK: - Actions
     
     @IBAction func selectImageButtonTapped(sender: AnyObject) {
-        postImageView.image = UIImage(named: "testImage")
+        
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .PhotoLibrary
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+        
         selectImageButton.setTitle("", forState: .Normal)
     }
     
@@ -72,6 +80,18 @@ class AddPostTableViewController: UITableViewController {
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            postImageView.contentMode = .ScaleAspectFit
+            postImageView.image = pickedImage
+        }
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func displayAlert() {
