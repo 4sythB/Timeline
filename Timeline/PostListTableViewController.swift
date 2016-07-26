@@ -9,16 +9,19 @@
 import UIKit
 import CoreData
 
-class PostListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class PostListTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating {
     
     let moc = Stack.sharedStack.managedObjectContext
     
     var fetchedResultsController: NSFetchedResultsController = NSFetchedResultsController()
     
+    var searchController: UISearchController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupFetchedResultsController()
+        setUpSearchController()
     }
     
     func setupFetchedResultsController() {
@@ -36,6 +39,30 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
         }
         
         fetchedResultsController.delegate = self
+    }
+    
+    func setUpSearchController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let resultsController = storyboard.instantiateViewControllerWithIdentifier("resultsController")
+        
+        searchController = UISearchController(searchResultsController: resultsController)
+        guard let searchController = searchController else { return }
+        
+        searchController.searchResultsUpdater = self
+        
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.searchBar.placeholder = "Search"
+        searchController.definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        guard let text = searchController.searchBar.text?.lowercaseString,
+            resultsController = searchController.searchResultsController as? SearchResultsTableViewController,
+            let posts = fetchedResultsController.fetchedObjects as? [Post] else { return }
+        
+        resultsController.resultsArray = posts.filter { $0.matchesSearchTerm(text) }
+        resultsController.tableView.reloadData()
     }
     
     // MARK: - Table view data source
