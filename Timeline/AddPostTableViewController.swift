@@ -61,7 +61,10 @@ class AddPostTableViewController: UITableViewController {
     }
     
     @IBAction func addPostButtonTapped(sender: AnyObject) {
-        guard let image = postImageView.image, comment = commentTextField.text where comment.characters.count > 0 else { return }
+        guard let image = postImageView.image, comment = commentTextField.text where comment.characters.count > 0 else {
+            displayAlert()
+            return
+        }
         
         PostController.sharedController.createPost(image, caption: comment)
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -69,6 +72,17 @@ class AddPostTableViewController: UITableViewController {
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func displayAlert() {
+        
+        let alert = UIAlertController(title: "Oops!", message: "Something's missing", preferredStyle: .Alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        
+        alert.addAction(okAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
 
     /*
