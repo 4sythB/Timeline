@@ -42,7 +42,7 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
         request.sortDescriptors = [sortDescriptor]
         request.predicate = NSPredicate(format: "post == %@", post)
         
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "timestamp", cacheName: nil)
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         
         do {
             try fetchedResultsController.performFetch()
@@ -80,13 +80,6 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
         cell.detailTextLabel?.text = "\(post.timestamp)"
         
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            guard let post = fetchedResultsController.objectAtIndexPath(indexPath) as? Post else { return }
-            PostController.sharedController.deletePost(post)
-        }
     }
     
     // MARK: - Actions
