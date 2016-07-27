@@ -70,14 +70,22 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
         return sections[section].numberOfObjects
     }
     
+    let dateFormatter: NSDateFormatter = {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .ShortStyle
+        formatter.timeStyle = .ShortStyle
+        formatter.doesRelativeDateFormatting = true
+        return formatter
+    }()
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("postDetailCell", forIndexPath: indexPath)
         
-        guard let comments = post?.comments, post = post else { return UITableViewCell() }
+        guard let comments = post?.comments else { return UITableViewCell() }
         let comment = comments[indexPath.row] as Comment
         
         cell.textLabel?.text = comment.text
-        cell.detailTextLabel?.text = "\(post.timestamp)"
+        cell.detailTextLabel?.text = dateFormatter.stringFromDate(comment.timestamp)
         
         return cell
     }
@@ -112,6 +120,17 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     
     @IBAction func shareButtonTapped(sender: AnyObject) {
         
+        guard let comments = post?.comments else { return }
+        let comment = comments[0] as Comment
+        
+        guard let image = postImageView.image else { return }
+        
+        let objectsToShare: [AnyObject] = [comment, image]
+        
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        
+        activityVC.popoverPresentationController?.sourceView = sender as? UIView
+        self.presentViewController(activityVC, animated: true, completion: nil)
     }
     
     @IBAction func followPostButtonTapped(sender: AnyObject) {
