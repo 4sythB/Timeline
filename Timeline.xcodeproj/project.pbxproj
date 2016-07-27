@@ -13,6 +13,7 @@
 		68658B321CF8A1D60016C5CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68658B301CF8A1D60016C5CD /* LaunchScreen.storyboard */; };
 		68658B3D1CF8A1D60016C5CD /* TimelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68658B3C1CF8A1D60016C5CD /* TimelineTests.swift */; };
 		68658B481CF8A1D60016C5CD /* TimelineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68658B471CF8A1D60016C5CD /* TimelineUITests.swift */; };
+		A22FF6391D495415009F993C /* CloudKitManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FF6381D495415009F993C /* CloudKitManagedObject.swift */; };
 		A28BB9C81D468AAF001D1713 /* PostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9C71D468AAF001D1713 /* PostListTableViewController.swift */; };
 		A28BB9CA1D468AE6001D1713 /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9C91D468AE6001D1713 /* PostDetailTableViewController.swift */; };
 		A28BB9CC1D468B90001D1713 /* AddPostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9CB1D468B90001D1713 /* AddPostTableViewController.swift */; };
@@ -28,6 +29,7 @@
 		A28BB9E81D46A29F001D1713 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E61D46A29F001D1713 /* Post.swift */; };
 		A28BB9EA1D46A5E1001D1713 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9E91D46A5E1001D1713 /* PostTableViewCell.swift */; };
 		A28BBA781D47F203001D1713 /* SearchableRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BBA771D47F203001D1713 /* SearchableRecord.swift */; };
+		A28BBA7A1D494F65001D1713 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BBA791D494F65001D1713 /* CloudKitManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,7 @@
 		68658B431CF8A1D60016C5CD /* TimelineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimelineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		68658B471CF8A1D60016C5CD /* TimelineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineUITests.swift; sourceTree = "<group>"; };
 		68658B491CF8A1D60016C5CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A22FF6381D495415009F993C /* CloudKitManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManagedObject.swift; sourceTree = "<group>"; };
 		A28BB9C71D468AAF001D1713 /* PostListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostListTableViewController.swift; sourceTree = "<group>"; };
 		A28BB9C91D468AE6001D1713 /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		A28BB9CB1D468B90001D1713 /* AddPostTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPostTableViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 		A28BB9E61D46A29F001D1713 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		A28BB9E91D46A5E1001D1713 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		A28BBA771D47F203001D1713 /* SearchableRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchableRecord.swift; sourceTree = "<group>"; };
+		A28BBA791D494F65001D1713 /* CloudKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,10 +131,10 @@
 			children = (
 				68658B271CF8A1D60016C5CD /* AppDelegate.swift */,
 				68658B2B1CF8A1D60016C5CD /* Main.storyboard */,
-				A28BB9D31D468CAA001D1713 /* Stack.swift */,
 				A28BB9DD1D469069001D1713 /* Model + Core Data */,
 				A28BB9E41D46A15A001D1713 /* Model Controllers */,
 				A28BB9CF1D468C4B001D1713 /* View Controllers */,
+				A28BBA7B1D494F6F001D1713 /* Helpers */,
 				68658B2E1CF8A1D60016C5CD /* Assets.xcassets */,
 				68658B301CF8A1D60016C5CD /* LaunchScreen.storyboard */,
 				68658B331CF8A1D60016C5CD /* Info.plist */,
@@ -190,6 +194,16 @@
 				A28BBA771D47F203001D1713 /* SearchableRecord.swift */,
 			);
 			name = "Model Controllers";
+			sourceTree = "<group>";
+		};
+		A28BBA7B1D494F6F001D1713 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A28BB9D31D468CAA001D1713 /* Stack.swift */,
+				A28BBA791D494F65001D1713 /* CloudKitManager.swift */,
+				A22FF6381D495415009F993C /* CloudKitManagedObject.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,6 +341,7 @@
 				A28BB9D21D468C97001D1713 /* PostModel.xcdatamodeld in Sources */,
 				A28BB9EA1D46A5E1001D1713 /* PostTableViewCell.swift in Sources */,
 				A28BB9DB1D469061001D1713 /* SyncableObject+CoreDataProperties.swift in Sources */,
+				A28BBA7A1D494F65001D1713 /* CloudKitManager.swift in Sources */,
 				A28BB9D41D468CAA001D1713 /* Stack.swift in Sources */,
 				A28BB9C81D468AAF001D1713 /* PostListTableViewController.swift in Sources */,
 				A28BB9E81D46A29F001D1713 /* Post.swift in Sources */,
@@ -335,6 +350,7 @@
 				A28BB9E11D46A02C001D1713 /* Comment.swift in Sources */,
 				A28BBA781D47F203001D1713 /* SearchableRecord.swift in Sources */,
 				A28BB9CC1D468B90001D1713 /* AddPostTableViewController.swift in Sources */,
+				A22FF6391D495415009F993C /* CloudKitManagedObject.swift in Sources */,
 				A28BB9E31D46A153001D1713 /* PostController.swift in Sources */,
 				A28BB9E01D46A02C001D1713 /* Comment+CoreDataProperties.swift in Sources */,
 				A28BB9CA1D468AE6001D1713 /* PostDetailTableViewController.swift in Sources */,
