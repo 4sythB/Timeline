@@ -20,7 +20,6 @@ class PostController {
     let moc = Stack.sharedStack.managedObjectContext
     
     init() {
-        
         performFullSync()
     }
     
@@ -71,7 +70,7 @@ class PostController {
     
     func postWithName(name: String) -> Post? {
         
-        let fetchRequest = NSFetchRequest(entityName: "Post")
+        let fetchRequest = NSFetchRequest(entityName: Post.recordTypeKey)
         let predicate = NSPredicate(format: "recordName == %@", argumentArray: [name])
         fetchRequest.predicate = predicate
         
@@ -85,7 +84,7 @@ class PostController {
     func syncedRecords(type: String) -> [CloudKitManagedObject] {
         
         let request = NSFetchRequest(entityName: type)
-        let predicate = NSPredicate(format: "recordData != nil")
+        let predicate = NSPredicate(format: "recordIDData != nil")
         
         request.predicate = predicate
         
@@ -97,7 +96,7 @@ class PostController {
     func unsyncedRecords(type: String) -> [CloudKitManagedObject] {
         
         let request = NSFetchRequest(entityName: type)
-        let predicate = NSPredicate(format: "recordData == nil")
+        let predicate = NSPredicate(format: "recordIDData == nil")
         
         request.predicate = predicate
         

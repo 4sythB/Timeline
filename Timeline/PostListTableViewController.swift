@@ -22,6 +22,15 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
         
         setupFetchedResultsController()
         setUpSearchController()
+        requestFullSync()
+        
+        self.refreshControl?.addTarget(self, action: #selector(PostListTableViewController.handleRefresh(_:)), forControlEvents: .ValueChanged)
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        requestFullSync()
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func setupFetchedResultsController() {
@@ -123,6 +132,17 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         tableView.endUpdates()
+    }
+    
+    // MARK: - Sync
+    
+    func requestFullSync(completion: (() -> Void?)? = nil) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        PostController.sharedController.performFullSync()
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     // MARK: - Navigation
