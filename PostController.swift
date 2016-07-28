@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import UIKit
+import CloudKit
 
 class PostController {
     
@@ -127,6 +128,29 @@ class PostController {
             
             if let completion = completion {
                 completion()
+            }
+        }
+    }
+    
+    func pushChangestoCloudKit(completion: ((success: Bool, error: NSError?) -> Void)?) {
+        
+        let unsavedManagedObjects = unsyncedRecords(Post.recordTypeKey) + unsyncedRecords(Comment.recordTypeKey)
+        
+        let unsavedRecords = unsavedManagedObjects.flatMap({ $0.cloudKitRecord })
+        
+        cloudKitManager.saveRecords(unsavedRecords, perRecordCompletion: { (record, error) in
+            
+            guard let record = record else { return }
+            
+            if let matchingRecord = unsavedManagedObjects.filter({ $0.recordName == record.recordID.recordName }).first {
+                matchingRecord.update(record)
+            }
+            
+        }) { (records, error) in
+            
+            if let completion = completion {
+                let success = records != nil
+                completion(success: success, error: error)
             }
         }
     }
