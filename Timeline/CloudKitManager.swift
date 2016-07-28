@@ -31,7 +31,7 @@ class CloudKitManager {
     
     // MARK: - User Info Discovery
     
-    // If I'm logged in it'll fetch my record
+    // If the user is logged in it'll fetch the user's record
     func fetchLoggedInUserRecord(completion: ((record: CKRecord?, error: NSError?) -> Void)?) {
         
         CKContainer.defaultContainer().fetchUserRecordIDWithCompletionHandler { (recordID, error) in
@@ -178,7 +178,7 @@ class CloudKitManager {
         }
     }
     
-    func deleteReocordsWithID(recordIDs: [CKRecordID], completion: ((records: [CKRecord]?, recordIDs: [CKRecordID]?, error: NSError?) -> Void)?) {
+    func deleteRecordsWithID(recordIDs: [CKRecordID], completion: ((records: [CKRecord]?, recordIDs: [CKRecordID]?, error: NSError?) -> Void)?) {
         
         let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDs)
         operation.savePolicy = .IfServerRecordUnchanged
@@ -240,7 +240,7 @@ class CloudKitManager {
         }
     }
     
-    // MARK: - Subscriptions (allow for push notification, keep an eye on thigns)
+    // MARK: - Subscriptions (allow for push notification, keep an eye on things)
     
     func subscribe(type: String, predicate: NSPredicate, subscriptionID: String, isContentAvailable: Bool, alertBody: String? = nil, desiredKeys: [String]? = nil, options: CKSubscriptionOptions, completion: ((subscription: CKSubscription?, error: NSError?) -> Void)?) {
         

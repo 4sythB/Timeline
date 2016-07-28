@@ -32,6 +32,8 @@ class PostController {
         
         addCommentToPost(caption, post: post)
         
+        saveContext()
+        
         guard let cloudKitRecord = post.cloudKitRecord else { return }
         cloudKitManager.saveRecord(cloudKitRecord) { (record, error) in
             guard error == nil else { print(error?.localizedDescription); return }
@@ -39,16 +41,14 @@ class PostController {
                 post.update(record)
             }
         }
-        
-        saveContext()
     }
     
     func addCommentToPost(text: String, post: Post) {
         guard let comment = Comment(post: post, text: text) else { return }
-        print(comment.cloudKitRecord)
-            guard let cloudKitRecord = comment.cloudKitRecord else {
-                return }
-        print(cloudKitRecord)
+
+        guard let cloudKitRecord = comment.cloudKitRecord else { return }
+        
+        saveContext()
         
         cloudKitManager.saveRecord(cloudKitRecord) { (record, error) in
             if error != nil { print(error?.localizedDescription) }
@@ -56,8 +56,6 @@ class PostController {
                 comment.update(record)
             }
         }
-        
-        saveContext()
     }
     
     func deletePost(post: Post) {
@@ -75,7 +73,37 @@ class PostController {
         
         return result?.first
     }
+    
+    // MARK: - Sync
+    
+    func syncedRecords(type: String) -> [CloudKitManagedObject] {
+        
+        let request = NSFetchRequest(entityName: type)
+        let predicate = NSPredicate(format: "recordData != nil")
+        
+        request.predicate = predicate
+        
+        guard let results = try? (Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? [] else { return [] }
+
+        return results
+    }
+    
+    func unsyncedRecords(type: String) -> [CloudKitManagedObject] {
+        
+        let request = NSFetchRequest(entityName: type)
+        let predicate = NSPredicate(format: "recordData == nil")
+        
+        request.predicate = predicate
+        
+        guard let results = try? (Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? [] else { return [] }
+        
+        return results
+    }
 }
+
+
+
+
 
 
 
