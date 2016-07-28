@@ -19,6 +19,11 @@ class PostController {
     
     let moc = Stack.sharedStack.managedObjectContext
     
+    init() {
+        
+        performFullSync()
+    }
+    
     func saveContext() {
         do {
             try moc.save()
@@ -151,6 +156,21 @@ class PostController {
             if let completion = completion {
                 let success = records != nil
                 completion(success: success, error: error)
+            }
+        }
+    }
+    
+    func performFullSync(completion: (() -> Void)? = nil) {
+        
+        pushChangestoCloudKit { (success, error) in
+            if success == success {
+                self.fetchNewRecords(Post.recordTypeKey, completion: {
+                    self.fetchNewRecords(Comment.recordTypeKey, completion: {
+                        if let completion = completion {
+                            completion()
+                        }
+                    })
+                })
             }
         }
     }
