@@ -14,6 +14,8 @@ class PostController {
     
     static let sharedController = PostController()
     
+    let cloudKitManager = CloudKitManager()
+    
     let moc = Stack.sharedStack.managedObjectContext
     
     func saveContext() {
@@ -28,12 +30,33 @@ class PostController {
     func createPost(image: UIImage, caption: String) {
         guard let imageData: NSData = UIImagePNGRepresentation(image), post = Post(photo: imageData) else { return }
         
-        _ = Comment(post: post, text: caption)
+        addCommentToPost(caption, post: post)
+        
+        guard let cloudKitRecord = post.cloudKitRecord else { return }
+        cloudKitManager.saveRecord(cloudKitRecord) { (record, error) in
+            guard error == nil else { print(error?.localizedDescription); return }
+            if let record = record {
+                post.update(record)
+            }
+        }
+        
         saveContext()
     }
     
     func addCommentToPost(text: String, post: Post) {
-        _ = Comment(post: post, text: text)
+        guard let comment = Comment(post: post, text: text) else { return }
+        print(comment.cloudKitRecord)
+            guard let cloudKitRecord = comment.cloudKitRecord else {
+                return }
+        print(cloudKitRecord)
+        
+        cloudKitManager.saveRecord(cloudKitRecord) { (record, error) in
+            if error != nil { print(error?.localizedDescription) }
+            if let record = record {
+                comment.update(record)
+            }
+        }
+        
         saveContext()
     }
     

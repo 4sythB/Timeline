@@ -10,10 +10,10 @@ import Foundation
 import CoreData
 import CloudKit
 
-class Comment: SyncableObject, SearchableRecord {
+class Comment: SyncableObject, SearchableRecord, CloudKitManagedObject {
     
-    private let kTimestamp = "timestamp"
-    private let kText = "text"
+    static private let kTimestamp = "timestamp"
+    static private let kText = "text"
     
     var recordType: String {
         return "Comment"
@@ -21,13 +21,13 @@ class Comment: SyncableObject, SearchableRecord {
     
     var cloudKitRecord: CKRecord? {
 
-        guard let postRecordID = post.cloudKitRecordID else { return nil }
-        let reference = CKReference(recordID: postRecordID, action: .DeleteSelf)
+        guard let postRecord = post.cloudKitRecord else { return nil }
+        let reference = CKReference(record: postRecord, action: .DeleteSelf)
         
         let record = CKRecord(recordType: recordType)
         
-        record[kTimestamp] = self.timestamp
-        record[kText] = self.text
+        record[Comment.kTimestamp] = self.timestamp
+        record[Comment.kText] = self.text
         record["reference"] = reference
         
         return record
@@ -44,8 +44,8 @@ class Comment: SyncableObject, SearchableRecord {
         self.recordName = NSUUID().UUIDString
     }
     
-    convenience init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
-        guard let entity = NSEntityDescription.entityForName("Comment", inManagedObjectContext: context), timestamp = record[kTimestamp] as? NSDate, text = record[kText] as? String, postReference = record["reference"] as? CKReference else { return nil }
+    convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+        guard let entity = NSEntityDescription.entityForName("Comment", inManagedObjectContext: context), timestamp = record[Comment.kTimestamp] as? NSDate, text = record[Comment.kText] as? String, _ = record["reference"] as? CKReference else { return nil }
         
         self.init(entity: entity, insertIntoManagedObjectContext: context)
         

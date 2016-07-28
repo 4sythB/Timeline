@@ -13,9 +13,9 @@ import UIKit
 
 class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
     
-    var recordType: String {
-        return "Post"
-    }
+    static let recordTypeKey = "Post"
+    
+    var recordType = Post.recordTypeKey
     
     lazy var temporaryPhotoURL: NSURL = {
         
@@ -52,7 +52,7 @@ class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
         self.recordName = NSUUID().UUIDString
     }
     
-    convenience init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
+    convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
         guard let entity = NSEntityDescription.entityForName("Post", inManagedObjectContext: context), timestamp = record["timestamp"] as? NSDate, photoData = record["photo"] as? NSData else { return nil }
         
         self.init(entity: entity, insertIntoManagedObjectContext: context)

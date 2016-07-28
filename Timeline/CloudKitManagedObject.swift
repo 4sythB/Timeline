@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import CloudKit
 
-protocol CloudKitManagedObject {
+@objc protocol CloudKitManagedObject {
     
     var timestamp: NSDate { get set }        // date and time the object was created
     var recordIDData: NSData? { get set }    // persisted CKRecordID
@@ -21,7 +21,7 @@ protocol CloudKitManagedObject {
     
     init?(record: CKRecord, context: NSManagedObjectContext)  // to initialize a new `NSManagedObject` from a `CKRecord` from CloudKit (similar to `init?(json: [String: AnyObject])` when working with REST APIs)
     
-    func updateWithRecord(record: CKRecord)
+//    func updateWithRecord(record: CKRecord)
 }
 
 extension CloudKitManagedObject {
@@ -57,7 +57,7 @@ extension CloudKitManagedObject {
     }
     
     // called after saving the object, saved the record.recordID to the recordIDData
-    mutating func update(record: CKRecord) {
+    func update(record: CKRecord) {
         recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
         
         do {

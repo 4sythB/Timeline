@@ -14,6 +14,7 @@
 		68658B3D1CF8A1D60016C5CD /* TimelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68658B3C1CF8A1D60016C5CD /* TimelineTests.swift */; };
 		68658B481CF8A1D60016C5CD /* TimelineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68658B471CF8A1D60016C5CD /* TimelineUITests.swift */; };
 		A22FF6391D495415009F993C /* CloudKitManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22FF6381D495415009F993C /* CloudKitManagedObject.swift */; };
+		A22FF63C1D499988009F993C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A22FF63B1D499988009F993C /* CloudKit.framework */; };
 		A28BB9C81D468AAF001D1713 /* PostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9C71D468AAF001D1713 /* PostListTableViewController.swift */; };
 		A28BB9CA1D468AE6001D1713 /* PostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9C91D468AE6001D1713 /* PostDetailTableViewController.swift */; };
 		A28BB9CC1D468B90001D1713 /* AddPostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28BB9CB1D468B90001D1713 /* AddPostTableViewController.swift */; };
@@ -63,6 +64,8 @@
 		68658B471CF8A1D60016C5CD /* TimelineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineUITests.swift; sourceTree = "<group>"; };
 		68658B491CF8A1D60016C5CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A22FF6381D495415009F993C /* CloudKitManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitManagedObject.swift; sourceTree = "<group>"; };
+		A22FF63A1D499978009F993C /* Timeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Timeline.entitlements; sourceTree = "<group>"; };
+		A22FF63B1D499988009F993C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		A28BB9C71D468AAF001D1713 /* PostListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostListTableViewController.swift; sourceTree = "<group>"; };
 		A28BB9C91D468AE6001D1713 /* PostDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailTableViewController.swift; sourceTree = "<group>"; };
 		A28BB9CB1D468B90001D1713 /* AddPostTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPostTableViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A22FF63C1D499988009F993C /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +113,7 @@
 		68658B1B1CF8A1D60016C5CD = {
 			isa = PBXGroup;
 			children = (
+				A22FF63B1D499988009F993C /* CloudKit.framework */,
 				68658B261CF8A1D60016C5CD /* Timeline */,
 				68658B3B1CF8A1D60016C5CD /* TimelineTests */,
 				68658B461CF8A1D60016C5CD /* TimelineUITests */,
@@ -129,6 +134,7 @@
 		68658B261CF8A1D60016C5CD /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				A22FF63A1D499978009F993C /* Timeline.entitlements */,
 				68658B271CF8A1D60016C5CD /* AppDelegate.swift */,
 				68658B2B1CF8A1D60016C5CD /* Main.storyboard */,
 				A28BB9DD1D469069001D1713 /* Model + Core Data */,
@@ -274,6 +280,12 @@
 				TargetAttributes = {
 					68658B231CF8A1D60016C5CD = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = XV5S682VFJ;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					68658B371CF8A1D60016C5CD = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -498,9 +510,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Timeline/Timeline.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Timeline/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.devmountain.Timeline;
+				PRODUCT_BUNDLE_IDENTIFIER = com.4sythb.Timeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -509,9 +523,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Timeline/Timeline.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Timeline/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.devmountain.Timeline;
+				PRODUCT_BUNDLE_IDENTIFIER = com.4sythb.Timeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

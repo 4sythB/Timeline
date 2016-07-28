@@ -27,7 +27,7 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
     func setupFetchedResultsController() {
         
         let request = NSFetchRequest(entityName: "Post")
-        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
         request.sortDescriptors = [sortDescriptor]
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
