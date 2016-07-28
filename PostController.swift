@@ -45,7 +45,7 @@ class PostController {
     
     func addCommentToPost(text: String, post: Post) {
         guard let comment = Comment(post: post, text: text) else { return }
-
+        
         guard let cloudKitRecord = comment.cloudKitRecord else { return }
         
         saveContext()
@@ -84,7 +84,7 @@ class PostController {
         request.predicate = predicate
         
         guard let results = try? (Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? [] else { return [] }
-
+        
         return results
     }
     
@@ -98,6 +98,37 @@ class PostController {
         guard let results = try? (Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? [] else { return [] }
         
         return results
+    }
+    
+    func fetchNewRecords(type: String, completion: (() -> Void)?) {
+        
+        let referencesToExclude = syncedRecords(type).flatMap { $0.cloudKitReference }
+        
+        var predicate = NSPredicate(format: "NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+        
+        if referencesToExclude.isEmpty {
+            predicate = NSPredicate(value: true)
+        }
+        
+        cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
+            
+            switch type {
+            case Post.recordTypeKey: _ = Post(record: record)
+            case Comment.recordTypeKey: _ = Comment(record: record)
+            default: return
+            }
+            
+            self.saveContext()
+            
+        }) { (records, error) in
+            if error != nil {
+                print("Error: Unable to fetch new records")
+            }
+            
+            if let completion = completion {
+                completion()
+            }
+        }
     }
 }
 

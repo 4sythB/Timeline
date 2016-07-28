@@ -12,6 +12,7 @@ import CloudKit
 
 class Comment: SyncableObject, SearchableRecord, CloudKitManagedObject {
     
+    static let recordTypeKey = "Comment"
     static private let kTimestamp = "timestamp"
     static private let kText = "text"
     
