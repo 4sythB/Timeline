@@ -41,4 +41,22 @@ class PostController {
         moc.deleteObject(post)
         saveContext()
     }
+    
+    func postWithName(name: String) -> Post? {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Post")
+        let predicate = NSPredicate(format: "recordName == %@", argumentArray: [name])
+        fetchRequest.predicate = predicate
+        
+        let result = (try? Stack.sharedStack.managedObjectContext.executeFetchRequest(fetchRequest) as? [Post]) ?? nil
+        
+        return result?.first
+    }
 }
+
+
+
+
+
+
+

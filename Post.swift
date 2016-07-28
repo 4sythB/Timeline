@@ -11,7 +11,7 @@ import CoreData
 import CloudKit
 import UIKit
 
-class Post: SyncableObject, SearchableRecord {
+class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
     
     var recordType: String {
         return "Post"
