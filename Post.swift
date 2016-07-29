@@ -14,6 +14,8 @@ import UIKit
 class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
     
     static let recordTypeKey = "Post"
+    static let photoDataKey = "photo"
+    static let timestampKey = "timestamp"
     
     var recordType = Post.recordTypeKey
     
@@ -25,14 +27,15 @@ class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
         let temporaryDirectoryURL = NSURL(fileURLWithPath: temporaryDirectory)
         let fileURL = temporaryDirectoryURL.URLByAppendingPathComponent(self.recordName).URLByAppendingPathExtension("jpg")
         
-        self.photoData.writeToURL(fileURL, atomically: true)
+        self.photoData?.writeToURL(fileURL, atomically: true)
         
         return fileURL
     }()
     
     var cloudKitRecord: CKRecord? {
         
-        let record = CKRecord(recordType: recordType)
+        let recordID = CKRecordID(recordName: recordName)
+        let record = CKRecord(recordType: recordType, recordID: recordID)
         
         let photoAsset = CKAsset(fileURL: temporaryPhotoURL)
         
@@ -40,6 +43,13 @@ class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
         record["timestamp"] = self.timestamp
         
         return record
+    }
+    
+    var photo: UIImage? {
+        
+        guard let photoData = self.photoData else { return nil }
+        
+        return UIImage(data: photoData)
     }
     
     convenience init?(photo: NSData, timestamp: NSDate = NSDate(), context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
@@ -53,14 +63,18 @@ class Post: SyncableObject, SearchableRecord, CloudKitManagedObject {
     }
     
     convenience required init?(record: CKRecord, context: NSManagedObjectContext = Stack.sharedStack.managedObjectContext) {
-        guard let entity = NSEntityDescription.entityForName("Post", inManagedObjectContext: context), timestamp = record["timestamp"] as? NSDate, photoData = record["photo"] as? NSData else { return nil }
+        
+        guard let timestamp = record.creationDate,
+            let photoData = record[Post.photoDataKey] as? CKAsset else { return nil }
+        
+        guard let entity = NSEntityDescription.entityForName(Post.recordTypeKey, inManagedObjectContext: context) else { fatalError("Error: Core Data failed to create entity from entity description.") }
         
         self.init(entity: entity, insertIntoManagedObjectContext: context)
         
         self.timestamp = timestamp
-        self.photoData = photoData
-        self.recordName = record.recordID.recordName
+        self.photoData = NSData(contentsOfURL: photoData.fileURL)
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
+        self.recordName = record.recordID.recordName
     }
     
     func matchesSearchTerm(searchTerm: String) -> Bool {

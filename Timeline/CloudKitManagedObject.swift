@@ -21,7 +21,7 @@ import CloudKit
     
     init?(record: CKRecord, context: NSManagedObjectContext)  // to initialize a new `NSManagedObject` from a `CKRecord` from CloudKit (similar to `init?(json: [String: AnyObject])` when working with REST APIs)
     
-//    func updateWithRecord(record: CKRecord)
+    //    func updateWithRecord(record: CKRecord)
 }
 
 extension CloudKitManagedObject {
@@ -29,19 +29,14 @@ extension CloudKitManagedObject {
     // helper variable to determine if a CloudKitManagedObject has a CKRecordID, which we can use to say that the record has been saved to the server
     var isSynced: Bool {
         
-        if recordIDData != nil {
-            return true
-        } else {
-            return false
-        }
+        return recordIDData != nil
     }
     
     // a computed property that unwraps the persisted recordIDData into a CKRecordID, or returns nil if there isn't one
     var cloudKitRecordID: CKRecordID? {
         
-        guard let recordIDData = recordIDData else { return nil }
-        
-        let ckRecordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData) as? CKRecordID
+        guard let recordIDData = recordIDData,
+            ckRecordID = NSKeyedUnarchiver.unarchiveObjectWithData(recordIDData) as? CKRecordID else { return nil }
         
         return ckRecordID
     }
@@ -51,7 +46,7 @@ extension CloudKitManagedObject {
         
         guard let ckRecordID = cloudKitRecordID else { return nil }
         
-        let ckReference = CKReference(recordID: ckRecordID, action: .DeleteSelf)
+        let ckReference = CKReference(recordID: ckRecordID, action: .None)
         
         return ckReference
     }
@@ -67,8 +62,9 @@ extension CloudKitManagedObject {
         }
     }
     
-    var nameForManagedObject: NSUUID {
-        return NSUUID()
+    func nameForManagedObject() -> String {
+        
+        return NSUUID().UUIDString
     }
 }
 

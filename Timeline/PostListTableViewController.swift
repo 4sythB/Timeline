@@ -109,8 +109,6 @@ class PostListTableViewController: UITableViewController, NSFetchedResultsContro
         tableView.beginUpdates()
     }
     
-    
-    
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
         switch type {

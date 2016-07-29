@@ -14,14 +14,17 @@ import CloudKit
 class PostController {
     
     static let sharedController = PostController()
-    
-    let cloudKitManager = CloudKitManager()
-    
+    let cloudKitManager: CloudKitManager
     let moc = Stack.sharedStack.managedObjectContext
     
+    var isSyncing: Bool = false
+    
     init() {
+        self.cloudKitManager = CloudKitManager()
         performFullSync()
     }
+    
+    // MARK: - Core Data
     
     func saveContext() {
         do {
@@ -33,7 +36,7 @@ class PostController {
     }
     
     func createPost(image: UIImage, caption: String) {
-        guard let imageData: NSData = UIImagePNGRepresentation(image), post = Post(photo: imageData) else { return }
+        guard let imageData: NSData = UIImageJPEGRepresentation(image, 0.8), post = Post(photo: imageData) else { return }
         
         addCommentToPost(caption, post: post)
         
@@ -51,10 +54,9 @@ class PostController {
     func addCommentToPost(text: String, post: Post) {
         guard let comment = Comment(post: post, text: text) else { return }
         
-        guard let cloudKitRecord = comment.cloudKitRecord else { return }
-        
         saveContext()
         
+        guard let cloudKitRecord = comment.cloudKitRecord else { return }
         cloudKitManager.saveRecord(cloudKitRecord) { (record, error) in
             if error != nil { print(error?.localizedDescription) }
             if let record = record {
@@ -79,7 +81,7 @@ class PostController {
         return result?.first
     }
     
-    // MARK: - Sync
+    // MARK: - Sync w/ CloudKit
     
     func syncedRecords(type: String) -> [CloudKitManagedObject] {
         
@@ -88,7 +90,7 @@ class PostController {
         
         request.predicate = predicate
         
-        guard let results = try? (Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? [] else { return [] }
+        let results = (try? Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? []
         
         return results
     }
@@ -100,30 +102,41 @@ class PostController {
         
         request.predicate = predicate
         
-        guard let results = try? (Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? [] else { return [] }
+        let results = (try? Stack.sharedStack.managedObjectContext.executeFetchRequest(request)) as? [CloudKitManagedObject] ?? []
         
         return results
     }
     
     func fetchNewRecords(type: String, completion: (() -> Void)?) {
         
-        let referencesToExclude = syncedRecords(type).flatMap { $0.cloudKitReference }
+        var referencesToExclude = [CKReference]()
+        let moc = Stack.sharedStack.managedObjectContext
+        var predicate: NSPredicate!
         
-        var predicate = NSPredicate(format: "NOT(recordID IN %@)", argumentArray: [referencesToExclude])
-        
-        if referencesToExclude.isEmpty {
-            predicate = NSPredicate(value: true)
+        moc.performBlockAndWait {
+            referencesToExclude = self.syncedRecords(type).flatMap { $0.cloudKitReference }
+            predicate = NSPredicate(format: "NOT(recordID IN %@)", argumentArray: [referencesToExclude])
+            
+            if referencesToExclude.isEmpty {
+                predicate = NSPredicate(value: true)
+            }
         }
         
         cloudKitManager.fetchRecordsWithType(type, predicate: predicate, recordFetchedBlock: { (record) in
             
-            switch type {
-            case Post.recordTypeKey: _ = Post(record: record)
-            case Comment.recordTypeKey: _ = Comment(record: record)
-            default: return
+            moc.performBlock {
+                switch type {
+                    
+                case Post.recordTypeKey:
+                    let _ = Post(record: record)
+                case Comment.recordTypeKey:
+                    let _ = Comment(record: record)
+                default:
+                    return
+                }
+                
+                self.saveContext()
             }
-            
-            self.saveContext()
             
         }) { (records, error) in
             if error != nil {
@@ -146,8 +159,12 @@ class PostController {
             
             guard let record = record else { return }
             
-            if let matchingRecord = unsavedManagedObjects.filter({ $0.recordName == record.recordID.recordName }).first {
-                matchingRecord.update(record)
+            let moc = Stack.sharedStack.managedObjectContext
+            moc.performBlock {
+                if let matchingRecord = unsavedManagedObjects.filter({ $0.recordName == record.recordID.recordName }).first {
+                    
+                    matchingRecord.update(record)
+                }
             }
             
         }) { (records, error) in
@@ -161,15 +178,25 @@ class PostController {
     
     func performFullSync(completion: (() -> Void)? = nil) {
         
-        pushChangestoCloudKit { (success, error) in
-            if success == success {
+        if isSyncing {
+            completion?()
+            
+        } else {
+            
+            isSyncing = true
+            
+            pushChangestoCloudKit { (success, error) in
+                
                 self.fetchNewRecords(Post.recordTypeKey, completion: {
                     self.fetchNewRecords(Comment.recordTypeKey, completion: {
-                        if let completion = completion {
-                            completion()
-                        }
+                        self.isSyncing = false
+                        completion?()
                     })
                 })
+                
+                if error != nil {
+                    print(error?.localizedDescription)
+                }
             }
         }
     }

@@ -54,9 +54,8 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     }
     
     func updateWithPost(post: Post) {
-        let imageData = post.photoData
-        guard let image: UIImage = UIImage(data: imageData) else { return }
-        postImageView.image = image
+        
+        postImageView.image = post.photo
     }
     
     // MARK: - Table view data source
@@ -81,8 +80,8 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("postDetailCell", forIndexPath: indexPath)
         
-        guard let comments = post?.comments else { return UITableViewCell() }
-        let comment = comments[indexPath.row] as Comment
+        guard let comments = post?.comments,
+            comment = comments[indexPath.row] as? Comment else { return UITableViewCell() }
         
         cell.textLabel?.text = comment.text
         cell.detailTextLabel?.text = dateFormatter.stringFromDate(comment.timestamp)
@@ -120,8 +119,8 @@ class PostDetailTableViewController: UITableViewController, NSFetchedResultsCont
     
     @IBAction func shareButtonTapped(sender: AnyObject) {
         
-        guard let comments = post?.comments else { return }
-        let comment = comments[0] as Comment
+        guard let comments = post?.comments,
+            comment = comments[0] as? Comment else { return }
         
         guard let image = postImageView.image else { return }
         

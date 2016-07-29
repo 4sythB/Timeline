@@ -54,6 +54,7 @@ class Comment: SyncableObject, SearchableRecord, CloudKitManagedObject {
         self.text = text
         self.recordName = record.recordID.recordName
         self.recordIDData = NSKeyedArchiver.archivedDataWithRootObject(record.recordID)
+        
     }
     
     func matchesSearchTerm(searchTerm: String) -> Bool {
